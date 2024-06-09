@@ -12,4 +12,8 @@ class Blog_model extends CI_Model
     {
         $this->db->insert('comment', $data);
     }
+    public function insertGallery($data)
+    {
+        $this->db->insert('galleries', $data);
+    }
 }

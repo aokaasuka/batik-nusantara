@@ -101,7 +101,6 @@ class Admin extends CI_Controller
     }
 
 
-
     public function edit($id)
     {
         $data['blog'] = $this->db->get_where('blog', ['id' => $id])->row_array();
@@ -176,5 +175,137 @@ class Admin extends CI_Controller
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
         redirect('admin/manageposts');
+    }
+
+    public function manageGalleries()
+    {
+        $data['title'] = 'Admin - Manage Galleries';
+        $data['galleries'] = $this->db->get('galleries')->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topnav');
+        $this->load->view('templates/sidenav');
+        $this->load->view('admin/manage_galleries', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function addNewGallery()
+    {
+        $this->form_validation->set_rules('title', 'Title', 'required|trim');
+        $this->form_validation->set_rules('description', 'Description', 'required|trim');
+
+        // Tambahkan aturan validasi khusus untuk file upload
+        $this->form_validation->set_rules('image', 'Image', 'callback_image_upload');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Admin - Add New Gallery';
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topnav');
+            $this->load->view('templates/sidenav');
+            $this->load->view('admin/add_new_gallery');
+            $this->load->view('templates/footer');
+        } else {
+
+            $title = $this->input->post('title', true);
+            $description = $this->input->post('description', true);
+
+            $data = [
+                'title' => htmlspecialchars($title),
+                'description' => htmlspecialchars($description),
+                'date_post' => time(),
+            ];
+
+            // File upload sudah diverifikasi, lakukan proses upload
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['max_size']     = '10000';
+            $config['upload_path'] = './assets/images/galleries';
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('image')) {
+                $new_image = $this->upload->data('file_name');
+                $data['image'] = $new_image;
+            } else {
+                // Jika upload gagal, tampilkan pesan kesalahan
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
+                redirect('admin/addNewGallery'); // Redirect kembali ke halaman tambah gallery
+            }
+
+            // Panggil model untuk menyimpan data gallery
+            $this->model->insertGallery($data);
+
+            // Set flashdata untuk pesan sukses
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
+            redirect('admin/managegalleries');
+        }
+    }
+
+    public function editGallery($id)
+    {
+        $data['gallery'] = $this->db->get_where('galleries', ['id' => $id])->row_array();
+
+        $data['title'] = 'Admin - Edit Gallery';
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topnav');
+        $this->load->view('templates/sidenav');
+        $this->load->view('admin/edit_gallery', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function editsGallery()
+    {
+        $id = $this->input->post('id');
+        $data['gallery'] = $this->db->get_where('galleries', ['id' => $id])->row_array();
+
+        $this->form_validation->set_rules('title', 'Title', 'required|trim');
+        $this->form_validation->set_rules('description', 'Description', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->editGallery($id);
+        } else {
+            $title = htmlspecialchars($this->input->post('title', true));
+            $description = htmlspecialchars($this->input->post('description', true));
+            $date_edit = time();
+
+            // cek jika ada gambar yang akan diupload
+            $upload_image = $_FILES['image']['name'];
+
+            if ($upload_image) {
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['max_size']     = '2048';
+                $config['upload_path'] = './assets/images/galleries';
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('image')) {
+                    $old_image = $data['blog']['image'];
+                    if ($old_image) {
+                        unlink(FCPATH . 'assets/images/galleries/' . $old_image);
+                    }
+
+                    $new_image = $this->upload->data('file_name');
+                    $this->db->set('image', $new_image);
+                } else {
+                    echo $this->upload->display_errors();
+                }
+            }
+
+            $this->db->set('title', $title);
+            $this->db->set('description', $description);
+            $this->db->where('id', $id);
+            $this->db->update('galleries');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diupdate!</div>');
+            redirect('admin/editgallery/' . $id);
+        }
+    }
+
+    public function deleteGallery($id)
+    {
+        // Hapus entri dari tabel 'blog'
+        $this->db->delete('galleries', ['id' => $id]);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
+        redirect('admin/managegalleries');
     }
 }

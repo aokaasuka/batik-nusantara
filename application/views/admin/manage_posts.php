@@ -67,7 +67,6 @@
                                             <a href="<?= base_url('admin/edit/' . $b['id']); ?>" class="btn btn-warning">Edit</a>
                                             <a href="<?= base_url('admin/delete/' . $b['id']); ?>" class="btn btn-danger">Delete</a>
                                         </td>
-
                                     </tr>
                                     <?php $i++; ?>
                                 <?php endforeach; ?>

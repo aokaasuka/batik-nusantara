@@ -7,6 +7,10 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-thumbtack <?= ($title == 'Admin - Manage Posts') ? 'text-white' : ''; ?>"></i></div>
                         Posts
                     </a>
+                    <a class="nav-link <?= ($title == 'Admin - Manage Galleries') ? 'text-white' : ''; ?>" href="<?= base_url('admin/managegalleries'); ?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-images <?= ($title == 'Admin - Manage Galleries') ? 'text-white' : ''; ?>"></i></div>
+                        Galleries
+                    </a>
                     <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
                         <div class="sb-nav-link-icon"><i class="fas fa-sign-out"></i></div>
                         Logout
