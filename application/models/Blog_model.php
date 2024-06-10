@@ -16,4 +16,8 @@ class Blog_model extends CI_Model
     {
         $this->db->insert('galleries', $data);
     }
+    public function insertEvent($data)
+    {
+        $this->db->insert('events', $data);
+    }
 }

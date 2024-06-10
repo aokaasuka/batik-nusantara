@@ -54,6 +54,7 @@ class Blog extends CI_Controller
     public function content($slug)
     {
         $data['blog'] = $this->db->get_where('blog', ['slug' => $slug])->row_array();
+        $data['blog2'] = $this->db->get('blog')->result_array();
 
         // Mengambil komentar yang terkait dengan blog
         $this->db->select('comment.*');
@@ -66,6 +67,7 @@ class Blog extends CI_Controller
         $this->form_validation->set_rules('comment', 'Comment', 'required|trim');
 
         if ($this->form_validation->run() == false) {
+            $this->load->view('templates/blog/header_2', $data);
             $this->load->view('blog/content', $data);
             $this->load->view('templates/blog/footer');
         } else {
@@ -84,6 +86,7 @@ class Blog extends CI_Controller
     public function galleries()
     {
         $data['galleries'] = $this->db->get('galleries')->result_array();
+        $data['blog2'] = $this->db->get('blog')->result_array();
         $this->load->view('blog/galleries', $data);
         $this->load->view('templates/blog/footer');
     }

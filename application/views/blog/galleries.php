@@ -72,18 +72,25 @@
                         <li class="has-children">
                             <a href="#0" title="" class="">Kategori</a>
                             <ul class="sub-menu">
-                                <li><a href="single-standard.html">Sejarah Batik</a></li>
-                                <!-- Sejarah Batik: Menyajikan informasi tentang asal-usul batik, perkembangannya dari masa ke masa, dan peran budaya serta tradisi dalam pembuatan batik. -->
-                                <li><a href="single-standard.html">Jenis-Jenis Batik</a></li>
-                                <!-- Jenis-jenis Batik: Memperkenalkan berbagai jenis batik dari berbagai daerah di Indonesia maupun dari negara lain yang memiliki tradisi batik, serta perbedaan dan karakteristik masing-masing. -->
-                                <li><a href="single-standard.html">Teknik Pembuatan Batik</a></li>
-                                <!-- Teknik Pembuatan Batik: Mendetailkan proses pembuatan batik secara tradisional maupun modern, termasuk teknik pewarnaan, penggunaan alat, dan bahan-bahan yang digunakan. -->
-                                <li><a href="motif-batik.html">Motif Batik</a></li>
-                                <!-- Motif Batik: Menyajikan beragam motif batik beserta maknanya, baik yang memiliki makna filosofis, simbolis, maupun motif-motif yang bersifat dekoratif. -->
-                                <li><a href="event-batik.html">Event Batik</a></li>
-                                <!-- Event dan Komunitas Batik: Informasi tentang acara-acara terkait batik seperti pameran, workshop, dan festival, serta menghubungkan penggemar batik dengan komunitas-komunitas batik di berbagai tempat. -->
-                                <li><a href="berita.html">Berita</a></li>
-                                <!-- Berita dan Artikel Terkini: Menyajikan berita dan artikel terbaru seputar dunia batik, termasuk perkembangan industri, kolaborasi seniman, dan peristiwa terkait batik di dalam dan luar negeri. -->
+                                <li>
+                                    <?php foreach ($blog2 as $b) : ?>
+                                        <?php if ($b['slug'] == 'sejarah-batik') : ?>
+                                            <a href="<?= base_url('blog/content/' . $b['slug']); ?>">Sejarah Batik</a>
+                                        <?php elseif ($b['slug'] == 'jenis-jenis-batik-di-indonesia') : ?>
+                                            <a href="<?= base_url('blog/content/' . $b['slug']); ?>">Jenis-Jenis Batik</a>
+                                        <?php elseif ($b['slug'] == 'teknik-pembuatan-batik') : ?>
+                                            <a href="<?= base_url('blog/content/' . $b['slug']); ?>">Teknik Pembuatan Batik</a>
+                                        <?php elseif ($b['slug'] == 'motif-batik') : ?>
+                                            <a href="<?= base_url('blog/content/' . $b['slug']); ?>">Motif Batik</a>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </li>
+                                <li>
+                                    <a href="#">Event Batik</a>
+                                </li>
+                                <li>
+                                    <a href="#">Berita Batik</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="current-menu-item"><a href="<?= base_url('blog/galleries'); ?>" title="">Galeri Batik</a></li>

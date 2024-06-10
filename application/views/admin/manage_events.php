@@ -1,11 +1,11 @@
 <main>
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Manage Galleries</h1>
+        <h1 class="mt-4">Manage Events</h1>
 
         <div class="card mb-4">
             <div class="card-body">
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="<?= base_url('admin/addnewgallery'); ?>" class="btn btn-primary">Add New Gallery</a></li>
+                    <li class="breadcrumb-item"><a href="<?= base_url('admin/addnewevent'); ?>" class="btn btn-primary">Add New Event</a></li>
                 </ol>
                 <?= $this->session->flashdata('message');
                 ?>
@@ -20,14 +20,18 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Blog title</th>
+                                    <th>Poster image</th>
+                                    <th>Event name</th>
+                                    <th>Period</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>No</th>
-                                    <th>Blog title</th>
+                                    <th>Poster image</th>
+                                    <th>Event name</th>
+                                    <th>Period</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -50,13 +54,17 @@
                                     return $day . ', ' . date('j', $timestamp) . ' ' . $month . ' ' . date('Y, H:i', $timestamp) . ' WIB';
                                 }
                                 ?>
-                                <?php foreach ($galleries as $g) : ?>
+                                <?php foreach ($events as $e) : ?>
                                     <tr>
                                         <td><?= $i; ?></td>
-                                        <td><?= $g['title']; ?></td>
                                         <td>
-                                            <a href="<?= base_url('admin/editgallery/' . $g['id']); ?>" class="btn btn-warning">Edit</a>
-                                            <a href="<?= base_url('admin/deletegallery/' . $g['id']); ?>" class="btn btn-danger">Delete</a>
+                                            <img src="<?= base_url('assets/images/events/' . $e['image']); ?>" alt="" class="img-fluid" style="max-width: 200px; width: 100%; height: auto;">
+                                        </td>
+                                        <td><?= $e['event_name']; ?></td>
+                                        <td><?= $e['period']; ?></td>
+                                        <td>
+                                            <a href="<?= base_url('admin/editevent/' . $e['id']); ?>" class="btn btn-warning">Edit</a>
+                                            <a href="<?= base_url('admin/deleteevent/' . $e['id']); ?>" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                     <?php $i++; ?>

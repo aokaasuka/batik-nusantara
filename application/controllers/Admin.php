@@ -307,4 +307,141 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
         redirect('admin/managegalleries');
     }
+
+    public function manageEvents()
+    {
+        $data['title'] = 'Admin - Manage Events';
+        $data['events'] = $this->db->get('events')->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topnav');
+        $this->load->view('templates/sidenav');
+        $this->load->view('admin/manage_events', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function addNewEvent()
+    {
+        $this->form_validation->set_rules('event_name', 'Event Name', 'required|trim');
+        $this->form_validation->set_rules('period', 'Period', 'required|trim');
+        $this->form_validation->set_rules('description', 'Description', 'required|trim');
+
+        // Tambahkan aturan validasi khusus untuk file upload
+        $this->form_validation->set_rules('image', 'Image', 'callback_image_upload');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Admin - Add New Event';
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/topnav');
+            $this->load->view('templates/sidenav');
+            $this->load->view('admin/add_new_event');
+            $this->load->view('templates/footer');
+        } else {
+
+            $event_name = $this->input->post('event_name', true);
+            $period = $this->input->post('period', true);
+            $description = $this->input->post('description', true);
+
+            $data = [
+                'event_name' => htmlspecialchars($event_name),
+                'period' => htmlspecialchars($period),
+                'description' => htmlspecialchars($description),
+                'date_post' => time(),
+            ];
+
+            // File upload sudah diverifikasi, lakukan proses upload
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['max_size']     = '10000';
+            $config['upload_path'] = './assets/images/events';
+
+            $this->load->library('upload', $config);
+
+            if ($this->upload->do_upload('image')) {
+                $new_image = $this->upload->data('file_name');
+                $data['image'] = $new_image;
+            } else {
+                // Jika upload gagal, tampilkan pesan kesalahan
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
+                redirect('admin/addNewEvent'); // Redirect kembali ke halaman tambah gallery
+            }
+
+            // Panggil model untuk menyimpan data gallery
+            $this->model->insertEvent($data);
+
+            // Set flashdata untuk pesan sukses
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil ditambahkan!</div>');
+            redirect('admin/manageevents');
+        }
+    }
+
+    public function editEvent($id)
+    {
+        $data['event'] = $this->db->get_where('events', ['id' => $id])->row_array();
+
+        $data['title'] = 'Admin - Edit Event';
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/topnav');
+        $this->load->view('templates/sidenav');
+        $this->load->view('admin/edit_event', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function editsEvent()
+    {
+        $id = $this->input->post('id');
+        $data['event'] = $this->db->get_where('events', ['id' => $id])->row_array();
+
+        $this->form_validation->set_rules('event_name', 'Event Name', 'required|trim');
+        $this->form_validation->set_rules('period', 'Period', 'required|trim');
+        $this->form_validation->set_rules('description', 'Description', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->editEvent($id);
+        } else {
+            $event_name = htmlspecialchars($this->input->post('event_name', true));
+            $period = htmlspecialchars($this->input->post('period', true));
+            $description = htmlspecialchars($this->input->post('description', true));
+
+            // cek jika ada gambar yang akan diupload
+            $upload_image = $_FILES['image']['name'];
+
+            if ($upload_image) {
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['max_size']     = '2048';
+                $config['upload_path'] = './assets/images/events';
+
+                $this->load->library('upload', $config);
+
+                if ($this->upload->do_upload('image')) {
+                    $old_image = $data['event']['image'];
+                    if ($old_image) {
+                        unlink(FCPATH . 'assets/images/events/' . $old_image);
+                    }
+
+                    $new_image = $this->upload->data('file_name');
+                    $this->db->set('image', $new_image);
+                } else {
+                    echo $this->upload->display_errors();
+                }
+            }
+
+            $this->db->set('event_name', $event_name);
+            $this->db->set('period', $period);
+            $this->db->set('description', $description);
+            $this->db->where('id', $id);
+            $this->db->update('events');
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diupdate!</div>');
+            redirect('admin/editevent/' . $id);
+        }
+    }
+
+    public function deleteEvent($id)
+    {
+        // Hapus entri dari tabel 'blog'
+        $this->db->delete('events', ['id' => $id]);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil dihapus!</div>');
+        redirect('admin/manageevents');
+    }
 }

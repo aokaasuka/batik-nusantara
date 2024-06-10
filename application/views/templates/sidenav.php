@@ -11,6 +11,10 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-images <?= ($title == 'Admin - Manage Galleries') ? 'text-white' : ''; ?>"></i></div>
                         Galleries
                     </a>
+                    <a class="nav-link <?= ($title == 'Admin - Manage Events') ? 'text-white' : ''; ?>" href="<?= base_url('admin/manageevents'); ?>">
+                        <div class="sb-nav-link-icon"><i class="fas fa-people-roof <?= ($title == 'Admin - Manage Events') ? 'text-white' : ''; ?>"></i></div>
+                        Events
+                    </a>
                     <a class="nav-link" href="<?= base_url('auth/logout'); ?>">
                         <div class="sb-nav-link-icon"><i class="fas fa-sign-out"></i></div>
                         Logout

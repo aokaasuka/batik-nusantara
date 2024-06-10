@@ -7,13 +7,12 @@
     ================================================== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BatikNusantara - Blog</title>
+    <title><?= $blog['blog_title'] ?></title>
 
     <script>
         document.documentElement.classList.remove('no-js');
         document.documentElement.classList.add('js');
     </script>
-
 
     <!-- CSS
     ================================================== -->
@@ -28,29 +27,6 @@
     <link rel="manifest" href="site.webmanifest">
 
 </head>
-<style>
-    .pagination-link a {
-        /* Gaya untuk tautan paginasi */
-        color: blue;
-        /* Ganti dengan warna yang Anda inginkan */
-        text-decoration: none;
-        padding: 5px 10px;
-    }
-
-    .pagination-link a:hover {
-        /* Gaya saat tautan paginasi dihover */
-        background-color: #f0f0f0;
-        /* Ganti dengan warna yang Anda inginkan */
-    }
-
-    .pagination-link .active a {
-        /* Gaya untuk tautan halaman aktif */
-        background-color: blue;
-        /* Ganti dengan warna yang Anda inginkan */
-        color: white;
-        /* Ganti dengan warna teks yang Anda inginkan */
-    }
-</style>
 
 <body id="top">
 
@@ -68,7 +44,7 @@
 
     <!-- page wrap
     ================================================== -->
-    <div id="page" class="s-pagewrap ss-home">
+    <div id="page" class="s-pagewrap">
 
 
         <!-- # site header 
@@ -77,7 +53,7 @@
 
             <div class="s-header__branding">
                 <p class="site-title">
-                    <a href="index.html" rel="home">BatikNusantara.</a>
+                    <a href="<?= base_url('blog/index'); ?>" rel="home">BatikNusantara.</a>
                 </p>
             </div>
 
@@ -88,7 +64,7 @@
                     <h3 class="s-header__nav-heading">Navigate to</h3>
 
                     <ul class="s-header__nav">
-                        <li class="current-menu-item"><a href="<?= base_url('blog'); ?>" title="">Beranda</a></li>
+                        <li><a href="<?= base_url('blog'); ?>" title="">Beranda</a></li>
                         <li class="has-children">
                             <a href="#0" title="" class="">Kategori</a>
                             <ul class="sub-menu">
