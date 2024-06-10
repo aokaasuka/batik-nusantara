@@ -8,48 +8,63 @@ class Blog extends CI_Controller
         parent::__construct();
 
         $this->load->model('Blog_model', 'model');
+        $this->load->library('pagination');
+
+        if ($this->session->userdata('email')) {
+            redirect('admin/manageposts');
+        }
     }
 
     public function index()
     {
-        // Load the pagination library
+        // Load library pagination
         $this->load->library('pagination');
 
-        // Set pagination configuration
+        // Pagination configuration
         $config['base_url'] = base_url('blog/index');
         $config['total_rows'] = $this->db->count_all('blog');
-        $config['per_page'] = 6; // Jumlah post per halaman
-        $config['uri_segment'] = 3; // Segment di URL yang berisi nomor halaman
+        $config['per_page'] = 6; // Number of items per page
+        $config['uri_segment'] = 3; // The segment in URL that contains the page number
+
+        // Optional: Adjust this value based on your needs to ensure enough page links are shown
+        $config['num_links'] = 5; // Number of page links to show before and after the current page
+
+        // Pagination styling configuration
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = 'First';
+        $config['last_link'] = 'Last';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
 
         // Initialize pagination
         $this->pagination->initialize($config);
 
-        // Fetch data from database
-        $data['blog'] = $this->db->order_by('date_post', 'DESC')->get('blog', $config['per_page'], $this->uri->segment(3))->result_array();
+        // Determine the page number
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+        // Fetch data with pagination
+        $this->db->order_by('date_post', 'DESC');
+        $data['blog'] = $this->db->get('blog', $config['per_page'], $page)->result_array();
         $data['blog2'] = $this->db->get('blog')->result_array();
-
-        // Create pagination links
-        $pagination_links = $this->pagination->create_links();
-
-
-        // Tambahkan div pada setiap tautan paginasi
-        $pagination_links = preg_replace('/<a(.*?)>/', '<div class="pagination-link"><a$1>', $pagination_links);
-        $pagination_links = preg_replace('/<\/a>/', '</a></div>', $pagination_links);
-
-        // Tambahkan kelas 'active' pada tautan halaman aktif
-        $pagination_links = str_replace('<div class="pagination-link"><a', '<div class="pagination-link active"><a', $pagination_links);
-
-
-
-        // Tambahkan pagination ke dalam data
-        $data['pagination'] = $pagination_links;
 
         // Load the views
         $this->load->view('templates/blog/header', $data);
         $this->load->view('blog/index', $data);
         $this->load->view('templates/blog/footer');
     }
-
 
     public function content($slug)
     {
@@ -87,7 +102,91 @@ class Blog extends CI_Controller
     {
         $data['galleries'] = $this->db->get('galleries')->result_array();
         $data['blog2'] = $this->db->get('blog')->result_array();
+
+
+        $config['base_url'] = base_url('blog/galleries');
+        $config['total_rows'] = $this->db->count_all('galleries');
+        $config['per_page'] = 9; // Jumlah item per halaman
+        $config['uri_segment'] = 3; // Segment URI tempat nomor halaman ditempatkan
+
+        // Konfigurasi styling pagination
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = 'First';
+        $config['last_link'] = 'Last';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+
+        // Inisialisasi pagination
+        $this->pagination->initialize($config);
+
+        // Ambil data dari database sesuai dengan pagination
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $data['galleries'] = $this->db->get('galleries', $config['per_page'], $page)->result_array();
+        $data['blog2'] = $this->db->get('blog')->result_array();
+
         $this->load->view('blog/galleries', $data);
+        $this->load->view('templates/blog/footer');
+    }
+
+    public function events()
+    {
+        // Load library pagination
+        $this->load->library('pagination');
+
+        // Pagination configuration
+        $config['base_url'] = base_url('blog/events');
+        $config['total_rows'] = $this->db->count_all('events');
+        $config['per_page'] = 9; // Number of items per page
+        $config['uri_segment'] = 3; // The segment in URL that contains the page number
+
+        // Optional: Adjust this value based on your needs to ensure enough page links are shown
+        $config['num_links'] = 5; // Number of page links to show before and after the current page
+
+        // Pagination styling configuration
+        $config['full_tag_open'] = '<ul class="pagination">';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = 'First';
+        $config['last_link'] = 'Last';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
+        $config['prev_link'] = '&laquo';
+        $config['prev_tag_open'] = '<li class="prev">';
+        $config['prev_tag_close'] = '</li>';
+        $config['next_link'] = '&raquo';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a href="#">';
+        $config['cur_tag_close'] = '</a></li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+
+        // Initialize pagination
+        $this->pagination->initialize($config);
+
+        // Determine the page number
+        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+        // Fetch data with pagination
+        $this->db->order_by('id', 'DESC'); // Assuming 'date' is the column for ordering
+        $data['events'] = $this->db->get('events', $config['per_page'], $page)->result_array();
+        $data['blog2'] = $this->db->get('blog')->result_array();
+
+        $this->load->view('blog/events', $data);
         $this->load->view('templates/blog/footer');
     }
 }

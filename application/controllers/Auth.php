@@ -6,6 +6,10 @@ class Auth extends CI_Controller
 
     public function index()
     {
+        if ($this->session->userdata('email')) {
+            redirect('admin/manageposts');
+        }
+
         $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', [
             'valid_email' => 'Kolom Email harus berisi alamat email yang valid!',
             'required' => 'Kolom Email diperlukan!'

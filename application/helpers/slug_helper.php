@@ -11,3 +11,11 @@ if (!function_exists('generate_slug')) {
         return $slug;
     }
 }
+
+function is_logged_in()
+{
+    $ci = get_instance();
+    if (!$ci->session->userdata('email')) {
+        redirect('auth');
+    }
+}

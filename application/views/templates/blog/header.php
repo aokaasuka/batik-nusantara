@@ -27,30 +27,49 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
 
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding-left: 0;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .pagination ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .pagination li {
+            display: inline;
+            margin: 0 4px;
+        }
+
+        .pagination li a,
+        .pagination li span {
+            color: black;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+        }
+
+        .pagination li a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+        .pagination li.active a {
+            background-color: black;
+            /* Merah */
+            color: white;
+            border: 1px solid black;
+            /* Merah */
+        }
+    </style>
 </head>
-<style>
-    .pagination-link a {
-        /* Gaya untuk tautan paginasi */
-        color: blue;
-        /* Ganti dengan warna yang Anda inginkan */
-        text-decoration: none;
-        padding: 5px 10px;
-    }
-
-    .pagination-link a:hover {
-        /* Gaya saat tautan paginasi dihover */
-        background-color: #f0f0f0;
-        /* Ganti dengan warna yang Anda inginkan */
-    }
-
-    .pagination-link .active a {
-        /* Gaya untuk tautan halaman aktif */
-        background-color: blue;
-        /* Ganti dengan warna yang Anda inginkan */
-        color: white;
-        /* Ganti dengan warna teks yang Anda inginkan */
-    }
-</style>
 
 <body id="top">
 
@@ -106,10 +125,7 @@
                                     <?php endforeach; ?>
                                 </li>
                                 <li>
-                                    <a href="#">Event Batik</a>
-                                </li>
-                                <li>
-                                    <a href="#">Berita Batik</a>
+                                    <a href="<?= base_url('blog/events'); ?>">Event Batik</a>
                                 </li>
                             </ul>
                         </li>
@@ -124,33 +140,5 @@
                 </nav> <!-- end s-header__nav-wrap -->
 
             </div> <!-- end s-header__navigation -->
-
-            <div class="s-header__search">
-
-                <div class="s-header__search-inner">
-                    <div class="row">
-
-                        <form role="search" method="get" class="s-header__search-form" action="#">
-                            <label>
-                                <span class="u-screen-reader-text">Search for:</span>
-                                <input type="search" class="s-header__search-field" placeholder="Search for..." value="" name="s" title="Search for:" autocomplete="off">
-                            </label>
-                            <input type="submit" class="s-header__search-submit" value="Search">
-                        </form>
-
-                        <a href="#0" title="Close Search" class="s-header__search-close">Close</a>
-
-                    </div> <!-- end row -->
-                </div> <!-- s-header__search-inner -->
-
-            </div> <!-- end s-header__search -->
-
-            <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
-            <a class="s-header__search-trigger" href="#">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z">
-                    </path>
-                </svg>
-            </a>
 
         </header> <!-- end s-header -->

@@ -7,7 +7,7 @@
     ================================================== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Galeri Batik - BatikNusantara</title>
+    <title>Event Batik - BatikNusantara</title>
 
     <script>
         document.documentElement.classList.remove('no-js');
@@ -29,48 +29,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
-    <style>
-        .pagination {
-            display: flex;
-            justify-content: center;
-            padding-left: 0;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
 
-        .pagination ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-        }
-
-        .pagination li {
-            display: inline;
-            margin: 0 4px;
-        }
-
-        .pagination li a,
-        .pagination li span {
-            color: black;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: background-color .3s;
-            border: 1px solid #ddd;
-        }
-
-        .pagination li a:hover:not(.active) {
-            background-color: #ddd;
-        }
-
-        .pagination li.active a {
-            background-color: black;
-            /* Merah */
-            color: white;
-            border: 1px solid black;
-            /* Merah */
-        }
-    </style>
 </head>
 
 <body id="top">
@@ -131,7 +90,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="current-menu-item"><a href="<?= base_url('blog/galleries'); ?>" title="">Galeri Batik</a></li>
+                        <li><a href="<?= base_url('blog/galleries'); ?>" title="">Galeri Batik</a></li>
                         <!-- Galeri Batik adalah tempat di mana Anda dapat menampilkan koleksi gambar-gambar batik secara visual. Ini bisa menjadi galeri foto atau gambar-gambar yang menampilkan berbagai jenis batik, motif-motif yang beragam, serta contoh-contoh batik yang unik dan menarik. Galeri Batik ini dapat menjadi sarana untuk menginspirasi pengunjung dengan keindahan dan keragaman batik.
 
                         Sementara itu, submenu seperti "Jenis-jenis Batik" atau "Seni dan Desain Batik" cenderung lebih fokus pada penjelasan dan informasi tertulis tentang jenis-jenis batik, motif-motif yang ada, atau tren desain batik. Ini mungkin termasuk deskripsi tekstual, sejarah, atau konteks budaya di balik berbagai jenis batik dan motif.
@@ -142,6 +101,34 @@
                 </nav> <!-- end s-header__nav-wrap -->
 
             </div> <!-- end s-header__navigation -->
+
+            <div class="s-header__search">
+
+                <div class="s-header__search-inner">
+                    <div class="row">
+
+                        <form role="search" method="get" class="s-header__search-form" action="#">
+                            <label>
+                                <span class="u-screen-reader-text">Search for:</span>
+                                <input type="search" class="s-header__search-field" placeholder="Search for..." value="" name="s" title="Search for:" autocomplete="off">
+                            </label>
+                            <input type="submit" class="s-header__search-submit" value="Search">
+                        </form>
+
+                        <a href="#0" title="Close Search" class="s-header__search-close">Close</a>
+
+                    </div> <!-- end row -->
+                </div> <!-- s-header__search-inner -->
+
+            </div> <!-- end s-header__search -->
+
+            <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+            <a class="s-header__search-trigger" href="#">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z">
+                    </path>
+                </svg>
+            </a>
 
         </header> <!-- end s-header -->
 
@@ -156,7 +143,7 @@
                 <div class="row">
                     <div class="column large-12">
                         <h1 class="page-title pt-5">
-                            Galeri Batik
+                            Event Batik
                         </h1>
                     </div>
                 </div>
@@ -173,18 +160,18 @@
 
                         <div class="grid-sizer"></div>
 
-                        <?php foreach ($galleries as $index => $g) : ?>
+                        <?php foreach ($events as $index => $e) : ?>
                             <article class="brick entry" data-animate-el>
 
                                 <div class="entry__thumb" style="height: 300px; overflow: hidden;">
                                     <a href="#" class="thumb-link" style="display: block; height: 100%;" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $index; ?>">
-                                        <img src="<?= base_url('assets/images/galleries/' . $g['image']); ?>" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <img src="<?= base_url('assets/images/events/' . $e['image']); ?>" alt="" style="width: 100%; height: 100%; object-fit: cover;">
                                     </a>
                                 </div> <!-- end entry__thumb -->
 
                                 <div class="entry__text">
                                     <div class="entry__header">
-                                        <h1 class="entry__title"><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $index; ?>"><?= $g['title']; ?>.</a></h1>
+                                        <h1 class="entry__title"><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal<?= $index; ?>"><?= $e['event_name']; ?>.</a></h1>
                                     </div>
                                 </div> <!-- end entry__text -->
 
@@ -197,17 +184,17 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header d-flex align-items-center">
-                                            <h5 class="modal-title"><?= $g['title']; ?></h5>
+                                            <h5 class="modal-title"><?= $e['event_name']; ?></h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="container-fluid">
 
-                                                <img src="<?= base_url('assets/images/galleries/' . $g['image']); ?>" alt="" width="100%">
+                                                <img src="<?= base_url('assets/images/events/' . $e['image']); ?>" alt="" width="100%">
 
                                                 <?php
                                                 // Misalkan $blog['description'] berisi teks dari database
-                                                $description = $g['description'];
+                                                $description = $e['description'];
 
                                                 // Konversi baris baru menjadi tag <br>
                                                 $description_with_br = nl2br($description);
@@ -224,7 +211,6 @@
                     </div> <!-- end bricks-wrapper -->
 
                 </div> <!-- end masonry-->
-
 
                 <!-- pagination -->
                 <div class="pagination">

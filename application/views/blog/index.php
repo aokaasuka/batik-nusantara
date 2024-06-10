@@ -9,77 +9,66 @@
         <div class="hero__slider swiper-container">
 
             <div class="swiper-wrapper">
-                <article class="hero__slide swiper-slide">
-                    <div class="hero__entry-image" style="background-image: url('<?= base_url('vendor/batikNusantara/images/thumbs/featured/featured-04_2000.jpg'); ?>');"></div>
-                    <div class="hero__entry-text">
-                        <div class="hero__entry-text-inner">
-                            <div class="hero__entry-meta">
-                                <span class="cat-links">
-                                    <a href="single-standard.html">Sejarah Batik</a>
-                                </span>
+                <?php foreach ($blog2 as $b) : ?>
+                    <?php if ($b['slug'] == 'sejarah-batik') : ?>
+                        <article class="hero__slide swiper-slide">
+                            <a href="<?= base_url('blog/content/' . $b['slug']); ?>">
+                                <div class="hero__entry-image" style="background-image: url('<?= base_url('./assets/images/post/' . $b['image']); ?>');"></div>
+                            </a>
+                            <div class="hero__entry-text">
+                                <div class="hero__entry-text-inner">
+                                    <h2 class="hero__entry-title">
+                                        <a href="<?= base_url('blog/content/' . $b['slug']); ?>">
+                                            <?= $b['blog_title']; ?>.
+                                        </a>
+                                    </h2>
+                                    <p class="hero__entry-desc">
+                                        <?= $b['preview']; ?>...
+                                    </p>
+                                    <a class="hero__more-link" href="<?= base_url('blog/content/' . $b['slug']); ?>">Read More</a>
+                                </div>
                             </div>
-                            <h2 class="hero__entry-title">
-                                <a href="single-standard.html">
-                                    Sejarah dan Perkembangan Batik di Indonesia.
-                                </a>
-                            </h2>
-                            <p class="hero__entry-desc">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                nostrud corporis est laudantium voluptatum consectetur adipiscing.
-                            </p>
-                            <a class="hero__more-link" href="single-standard.html">Read More</a>
-                        </div>
-                    </div>
-                </article>
-                <article class="hero__slide swiper-slide">
-                    <div class="hero__entry-image" style="background-image: url('images/thumbs/featured/featured-02_2000.jpg');"></div>
-                    <div class="hero__entry-text">
-                        <div class="hero__entry-text-inner">
-                            <div class="hero__entry-meta">
-                                <span class="cat-links">
-                                    <a href="galeri-batik.html">Jenis-Jenis Batik</a>
-                                </span>
+                        </article>
+                    <?php elseif ($b['slug'] == 'jenis-jenis-batik-di-indonesia') : ?>
+                        <article class="hero__slide swiper-slide">
+                            <a href="<?= base_url('blog/content/' . $b['slug']); ?>">
+                                <div class="hero__entry-image" style="background-image: url('<?= base_url('./assets/images/post/' . $b['image']); ?>');"></div>
+                            </a>
+                            <div class="hero__entry-text">
+                                <div class="hero__entry-text-inner">
+                                    <h2 class="hero__entry-title">
+                                        <a href="<?= base_url('blog/content/' . $b['slug']); ?>">
+                                            <?= $b['blog_title']; ?>.
+                                        </a>
+                                    </h2>
+                                    <p class="hero__entry-desc">
+                                        <?= $b['preview']; ?>...
+                                    </p>
+                                    <a class="hero__more-link" href="<?= base_url('blog/content/' . $b['slug']); ?>">Read More</a>
+                                </div>
                             </div>
-                            <h2 class="hero__entry-title">
-                                <a href="single-standard.html">
-                                    Jenis-Jenis Batik dan Pembuatannya.
-                                </a>
-                            </h2>
-                            <p class="hero__entry-desc">
-                                Voluptas harum sequi rerum quasi quisquam. Est tenetur ut doloribus in aliquid
-                                animi nostrum. Tempora
-                                quibusdam ad nulla. Quis autem possimus dolores est est fugiat saepe vel aut.
-                                Earum consequatur.
-                            </p>
-                            <a class="hero__more-link" href="single-standard.html">Read More</a>
-                        </div>
-                    </div>
-                </article>
-                <article class="hero__slide swiper-slide">
-                    <div class="hero__entry-image" style="background-image: url('images/thumbs/featured/featured-03_2000.jpg');"></div>
-                    <div class="hero__entry-text">
-                        <div class="hero__entry-text-inner">
-                            <div class="hero__entry-meta">
-                                <span class="cat-links">
-                                    <a href="galeri-batik.html">Lifestyle</a>
-                                </span>
+                        </article>
+                    <?php elseif ($b['slug'] == 'teknik-pembuatan-batik') : ?>
+                        <article class="hero__slide swiper-slide">
+                            <a href="<?= base_url('blog/content/' . $b['slug']); ?>">
+                                <div class="hero__entry-image" style="background-image: url('<?= base_url('./assets/images/post/' . $b['image']); ?>');"></div>
+                            </a>
+                            <div class="hero__entry-text">
+                                <div class="hero__entry-text-inner">
+                                    <h2 class="hero__entry-title">
+                                        <a href="<?= base_url('blog/content/' . $b['slug']); ?>">
+                                            <?= $b['blog_title']; ?>.
+                                        </a>
+                                    </h2>
+                                    <p class="hero__entry-desc">
+                                        <?= $b['preview']; ?>...
+                                    </p>
+                                    <a class="hero__more-link" href="<?= base_url('blog/content/' . $b['slug']); ?>">Read More</a>
+                                </div>
                             </div>
-                            <h2 class="hero__entry-title">
-                                <a href="single-standard.html">
-                                    Six Relaxation Techniques to Reduce Stress.
-                                </a>
-                            </h2>
-                            <p class="hero__entry-desc">
-                                Quasi consequatur quia excepturi ullam velit. Repellat velit vel occaecati neque
-                                perspiciatis quibusdam nulla.
-                                Unde et earum. Nostrum nulla optio debitis odio modi. Quis autem possimus
-                                dolores est est fugiat saepe vel aut.
-                            </p>
-                            <a class="hero__more-link" href="single-standard.html">Read More</a>
-                        </div>
-                    </div>
-                </article>
+                        </article>
+                    <?php endif; ?>
+                <?php endforeach; ?>
             </div> <!-- swiper-wrapper -->
 
             <div class="swiper-pagination"></div>
@@ -162,17 +151,11 @@
 
         </div> <!-- end masonry-->
 
-
         <!-- pagination -->
-        <div class="row pagination">
-            <div class="column lg-12">
-                <nav class="pgn">
-                    <ul>
-                        <?= $pagination; ?>
-                    </ul>
-                </nav> <!-- end pgn -->
-            </div> <!-- end column -->
-        </div> <!-- end pagination -->
+        <div class="pagination">
+            <?php echo $this->pagination->create_links(); ?>
+        </div>
+        <!-- end pagination -->
 
     </div> <!-- end bricks -->
 
