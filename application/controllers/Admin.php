@@ -265,7 +265,6 @@ class Admin extends CI_Controller
         } else {
             $title = htmlspecialchars($this->input->post('title', true));
             $description = htmlspecialchars($this->input->post('description', true));
-            $date_edit = time();
 
             // cek jika ada gambar yang akan diupload
             $upload_image = $_FILES['image']['name'];
@@ -278,7 +277,7 @@ class Admin extends CI_Controller
                 $this->load->library('upload', $config);
 
                 if ($this->upload->do_upload('image')) {
-                    $old_image = $data['blog']['image'];
+                    $old_image = $data['gallery']['image'];
                     if ($old_image) {
                         unlink(FCPATH . 'assets/images/galleries/' . $old_image);
                     }

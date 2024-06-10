@@ -26,6 +26,7 @@ class Blog extends CI_Controller
 
         // Fetch data from database
         $data['blog'] = $this->db->order_by('date_post', 'DESC')->get('blog', $config['per_page'], $this->uri->segment(3))->result_array();
+        $data['blog2'] = $this->db->get('blog')->result_array();
 
         // Create pagination links
         $pagination_links = $this->pagination->create_links();
@@ -44,7 +45,7 @@ class Blog extends CI_Controller
         $data['pagination'] = $pagination_links;
 
         // Load the views
-        $this->load->view('templates/blog/header');
+        $this->load->view('templates/blog/header', $data);
         $this->load->view('blog/index', $data);
         $this->load->view('templates/blog/footer');
     }
@@ -78,5 +79,12 @@ class Blog extends CI_Controller
 
             redirect('blog/content/' . $slug);
         }
+    }
+
+    public function galleries()
+    {
+        $data['galleries'] = $this->db->get('galleries')->result_array();
+        $this->load->view('blog/galleries', $data);
+        $this->load->view('templates/blog/footer');
     }
 }

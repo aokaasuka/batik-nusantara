@@ -194,12 +194,14 @@
                                 $content = $blog['content'];
 
                                 // Konversi baris baru menjadi tag <br>
-                                $content_with_br = nl2br($content);
+                                $content_with_br = nl2br(htmlspecialchars_decode($content, ENT_QUOTES));
                                 ?>
 
                                 <p class="drop-cap">
                                     <?= $content_with_br; ?>
                                 </p>
+
+
 
                             </div> <!-- end entry-content -->
 
